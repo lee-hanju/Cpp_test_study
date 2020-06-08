@@ -1,38 +1,46 @@
 #include<iostream>
-#include<ctime>
-#include<cstdlib>
 using namespace std;
-
-class Random {
+class Account {
+	string name;
+	int id;
+	int balance;
 public:
-	Random();
-	int next();
-	int nextInRange(int a, int b);
+	Account();
+	Account(string n, int i, int b);
+	void deposit(int money);
+	int withdraw(int money);
+	string getOwner();
+	int inquiry();
 };
 
-Random::Random() {
-	srand((unsigned)time(0));
+Account::Account() {
+	name = ""; id = 0; balance = 0;
 }
 
-int Random::next() {
-	return rand();
+Account::Account(string n, int i, int b) {
+	name = n; id = i; balance = b;
 }
 
-int Random::nextInRange(int a, int b) {
-	return rand() % (b - a + 1) + a;
+void Account::deposit(int money) {
+	balance += money;
+}
+
+int Account::withdraw(int money) {
+	balance -= money;
+}
+
+string Account::getOwner() {
+	return name;
+}
+
+int Account::inquiry() {
+	return balance;
 }
 
 int main() {
-	Random r;
-	cout << "--0에서 " << RAND_MAX << "까지의 랜덤 정수 10개--" << endl;
-	for (int i = 0; i < 10; i++) {
-		int n = r.next();
-		cout << n << ' ';
-	}
-	cout << endl << endl << "--2에서 " << "4까지의 랜덤정수 10개 --" << endl;
-	for (int i = 0; i < 10; i++) {
-		int n = r.nextInRange(2, 4);
-		cout << n << ' ';
-	}
-	cout << endl;
+	Account a("kitae", 1, 5000);
+	a.deposit(50000);
+	cout << a.getOwner() << "의 잔액은 " << a.inquiry() << "원 입니다" << endl;
+	a.withdraw(20000);
+	cout << a.getOwner() << "의 잔액은 " << a.inquiry() << "원 입니다." << endl;
 }
